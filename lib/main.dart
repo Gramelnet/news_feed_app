@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:newsfeedapp/screens/home_screen.dart';
-import 'package:newsfeedapp/style/style.dart';
+import 'package:newsfeedapp/view/screens/home_screen.dart';
+import 'package:newsfeedapp/view/screens/style/style.dart';
 
 void main() => runApp(MyApp());
 
