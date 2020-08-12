@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:newsfeedapp/data/category_info.dart';
+import 'package:newsfeedapp/data/search_type.dart';
 import 'package:newsfeedapp/view/screens/components/category_chips.dart';
 import 'package:newsfeedapp/view/screens/components/search_bar.dart';
+import 'package:newsfeedapp/viewmodels/news_list_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class NewsListPage extends StatelessWidget {
   @override
@@ -21,7 +24,8 @@ class NewsListPage extends StatelessWidget {
                   onSearch: (keyword) => getKeywordNews(context, keyword),
                 ),
                 CategoryChips(
-                  onCategorySelected: (category) => getCategoryNews(context, category),
+                  onCategorySelected: (category) =>
+                      getCategoryNews(context, category),
                 ),
                 Expanded(
                   child: Center(
@@ -35,14 +39,30 @@ class NewsListPage extends StatelessWidget {
   }
 
   onRefresh(BuildContext context) {
+    final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
+    viewModel.getNews(
+        searchType: viewModel.searchType,
+        keyword: viewModel.keyword,
+        category: viewModel.category);
     print("オンリフレッシュ！");
   }
 
   getKeywordNews(BuildContext context, keyword) {
+    final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
+    viewModel.getNews(
+      searchType: SearchType.KEYWORD,
+      keyword: keyword,
+      category: categories[0],
+    );
     print("ゲットキーワードニュース！");
   }
 
   getCategoryNews(BuildContext context, Category category) {
+    final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
+    viewModel.getNews(
+      searchType: SearchType.CATEGORY,
+      category: category,
+    );
     print("ゲットカテゴリーニュース : ${category.nameJp}");
   }
 }
